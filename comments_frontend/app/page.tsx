@@ -20,6 +20,12 @@ export default function Home() {
   >([]);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const processedCommentIds = useRef<Set<number>>(new Set());
 
   const [unreadComments, setUnreadComments] = useState<Comment[]>([]);
@@ -167,7 +173,7 @@ export default function Home() {
     setShowNotifications(false);
   };
 
-  if (isLoading || !user) {
+  if (!mounted || isLoading || !user) {
     return <div>Loading...</div>;
   }
 
